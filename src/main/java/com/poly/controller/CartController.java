@@ -27,7 +27,7 @@ public class CartController {
 		model.addAttribute("cart", cart.getProduct());
 		model.addAttribute("count",cart.getCount());
 		model.addAttribute("amount", cart.getAmout());
-		return "/user/view";
+		return "/user/cart";
 	}
 	@GetMapping("/add/{id}")
 	public String addToCart(@PathVariable("id") int id, Model model) {

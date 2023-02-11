@@ -20,63 +20,80 @@
 	body{background-color: #DDDDDD}.product{background-color: #eee}.brand{font-size: 13px}.act-price{color:red;font-weight: 700}.dis-price{text-decoration: line-through}.about{font-size: 14px}.color{margin-bottom:10px}label.radio{cursor: pointer}label.radio input{position: absolute;top: 0;left: 0;visibility: hidden;pointer-events: none}label.radio span{padding: 2px 9px;border: 2px solid #ff0000;display: inline-block;color: #ff0000;border-radius: 3px;text-transform: uppercase}label.radio input:checked+span{border-color: #ff0000;background-color: #ff0000;color: #fff}.btn-danger{background-color: #ff0000 !important;border-color: #ff0000 !important}.btn-danger:hover{background-color: #da0606 !important;border-color: #da0606 !important}.btn-danger:focus{box-shadow: none}.cart i{margin-right: 10px}
 </style>
 <script type="text/javascript">
-function change_image(image){
 
-    var container = document.getElementById("main-image");
-
-   container.src = image.src;
-}
-
-
-
-document.addEventListener("DOMContentLoaded", function(event) {
-
-
-
-
-
-
-
-});
 
 </script>
 </head>
 <body>
-	<div class="container mt-5 mb-5" >
-    <div class="row d-flex justify-content-center" style="height: 600px; border-radius: 10%">
-        <div class="col-md-10" style="height: 600px; border-radius: 10%">
-            <div class="card" style="height: 600px; border-radius: 10%; border: 0.1px;">
-                <div class="row" style="height: 500px; border-radius: 10%">
-                    <div class="col-md-6" style="height: 600px; border: 0.1px;">
-                        <div style="height: 500px;margin-top: 100px;" class="images">
-                            <div class="text-center"> <img alt="" style="width: 90%;" src="/views/img/${detail.image}"> </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="height: 500px; border-radius: 10%;">
-                        <div style="height: 500px;border-radius: 10%;" class="product p-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span class="ml-1">Back</span> </div> <i class="fa fa-shopping-cart text-muted"></i>
-                            </div>
-                            <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">PTP</span>
-                                <h5 class="text-uppercase">${detail.name}</h5>
-                                <div class="price d-flex flex-row align-items-center"> <span class="act-price"><fmt:formatNumber type="number" value="${detail.price}"/> VND</span>
-                                    <div class="ml-2"> <small class="dis-price">10000 VND</small> <span>140% OFF</span> </div>
-                                </div> 
-                            </div>
-                            <p class="about">${detail.description}</p>
-                            <div class="sizes mt-5">
-                                <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
-                            </div>
-                            <div class="cart mt-4 align-items-center"> <a class="btn btn-danger text-uppercase mr-2 px-4" href="/cart/add/${detail.id}">Add to cart</a> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
-                        </div>
+<%@include file="/views/common/header.jsp"%>
+	<div class="container">
+        <div class="row m-3">
+            <div class="bwp-single-image col-lg-5 col-md-12 col-12 text-center">
+                <div class="left-detail col-md-10 col-lg-12 m-auto">
+                    <div class="img-size">
+                    	<!-- ẢNH SẢN PHẨM -->
+                        <img src="<c:url value='/images/product/${spchitiet.Anh}'/>" alt="">
                     </div>
                 </div>
             </div>
+            <div class="bwp-single-infor col-lg-7 col-md-12 col-12">
+                <div class="right-detail">
+                	<!-- TÊN SẢN PHẨM -->
+                    <h1 itemprop="name" class="product_title entry-title">${spchitiet.TenSP}</h1>
+                    <!-- GIÁ SẢN PHẨM -->
+                    <div class="price-single">
+                        <div class="price">
+                        	<span class="woocommerce-Price-amount amount">
+                        		<span class="woocommerce-Price-currencySymbol">$</span>
+                        			${spchitiet.Gia}
+                        	</span>
+                        </div>
+                    </div>
+                    <!-- MÔ TẢ -->
+                    <div class="fw-bold text-secondary">Mô tả</div>
+                    <div itemprop="description" class="description col-10">
+                    	<!-- Nếu sản phẩm có mô tả -->
+                        <c:if test="${not empty spchitiet.MoTa}">
+                        	<p>${spchitiet.mota}</p>
+                        </c:if>
+                        <!-- Nếu sản phẩm không có mô tả -->
+                        <c:if test="${empty spchitiet.MoTa}">
+                        	<p>Sản phẩm này hiện chưa có mô tả, chúng tôi sẽ cập nhật sau. Xin vui lòng chờ đợi!</p>
+                        </c:if>
+                    </div>
+                    <div class="cart">
+                        <div class="quantity-button">
+                            <span>Quantity</span>
+                            <div class="quantity">
+                                <input type="number" id="quantity_6333fa0a4b0d4" class="input-text qty text" step="1"
+                                    min="1" max="" name="quantity" value="1" title="Qty" size="4" placeholder=""
+                                    inputmode="numeric" autocomplete="off">
+                            </div>
+                            <a type="submit" href="/giohang/them/${spchitiet.MaSP}" class="single_add_to_cart_button button alt text-decoration-none">Add to cart</a>
+                        </div>
+                        <div class="like-button">
+                            <button><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path
+                                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                                </svg></button>
+                        </div>
+                    </div>
+                    <div class="icon-cart">
+                        <ul>
+                            <li class="bg-primary"><a href="#"><i class="fa-brands fa-facebook"></i></i></a></li>
+                            <li class="bg-info"><a href="#"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
+                            <li class="bg-warning"><a href="#"><i class="fa-brands fa-google-plus" aria-hidden="true"></i></a></li>
+                            <li class="bg-danger"><a href="#"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
         </div>
     </div>
-</div>
 	
+	<%@include file="/views/common/footer.jsp"%>
 
 	
 </body>
