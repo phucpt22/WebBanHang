@@ -18,107 +18,14 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/f757c7087e.js"></script>
 <style type="text/css">
-.container-fluid {
-	margin: 0 auto;
-	float: none;
-	margin-bottom: 10px;
-}
 
-.navbar-nav {
-	margin-left: 200px;
-}
-
-.nav-item {
-	margin-left: 40px;
-}
-
-.d-flex {
-	margin: 0px 0px 10px 20px;
-}
 </style>
 </head>
 <body>
 	<!-- begin information bar -->
-	<div class="info-bar bg-dark" style="color: white">
-		<div
-			class="container d-flex justify-content-between align-items-center p-1">
-			<div class="">
-				<span class="ibar-title"><i
-					class="fa-solid fa-phone-volume me-2"></i>Hotline:</span> <span
-					class="me-2"> 0123456789</span> | <span class="ibar-title"><i
-					class="fa-brands fa-facebook-f me-2"></i> Facebook: </span> <a
-					style="color: white" class="me-2">phamphuc</a> | <span
-					class="ibar-title"><i class="fa-solid fa-language me-2"></i>
-					Language:</span> <select style="color: white"
-					class="rounded mx-2 bg-transparent border-0 text-center">
-					<option style="color: black" value="en">English</option>
-					<option style="color: black" value="vn">Vietnamese</option>
-				</select>
-			</div>
-			<div class="" style="color: white">
-				<c:choose>
-					<c:when test="${sessionScope.username != null}">
-						<div class="nav-item dropdown d-inline-flex">
-							<a style="color: white"
-								class="nav-link ibar-title py-0 dropdown-toggle" href="#"
-								id="navbarDropdown" role="button" data-toggle="dropdown"
-								aria-expanded="false"> <i class="fa-solid fa-user me-2"></i>
-								Hi, PhamTrongPhuc
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">User Profile</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="">Logout</a>
-							</div>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<i class="fa-solid fa-user"></i>
-						<a style="color: white" class="ibar-title me-3"
-							href="/account/login">Login</a> |
-		                    <a style="color: white" href="#"
-							class="ibar-title">Register</a>
-					</c:otherwise>
-				</c:choose>
-			</div>
-			<div>
-				<a class="btn btn-danger cart-button btn-block" href="/cart/view">
-					Go to cart <span>(<fmt:formatNumber type="number"
-							value="${cartQuantity}" />)
-				</span>
-				</a>
-			</div>
-		</div>
-	</div>
-	<nav class="navbar navbar-expand-lg navbar-light">
-		<div class="container">
-			<a class="navbar-brand" href="#">
-				<h1>DAY LA LOGO</h1>
-			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+	<%@include file="/views/common/header.jsp"%>
+	<br>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="#">Home</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Portfolio</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Services</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Contact</a>
-					</li>
-
-				</ul>
-
-			</div>
-		</div>
-	</nav>
 
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-ride="carousel">
@@ -155,7 +62,9 @@
 			class="sr-only">Next</span>
 		</a>
 	</div>
-	<div class="wrapper" style="margin-top: 40px;">
+
+	<br>
+	<%-- <div class="wrapper" style="margin-top: 40px;">
 		<div class="container">
 			<div class="row g-1">
 				<c:forEach var="prod" items="${products}">
@@ -178,120 +87,164 @@
 				</c:forEach>
 			</div>
 		</div>
-	</div>
-	<br>
-	<footer class="bg-dark text-center text-lg-start text-white">
-		<!-- Grid container -->
-		<div class="container p-4" style="width: 100%;">
-			<!--Grid row-->
-			<div class="row my-4">
-				<!--Grid column-->
-				<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+	</div> --%>
+	
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+			<div class="sidebar  shop-layout-boxed">
+				<div class="container-fluid">
+					<div class="main-archive-product row">
+						<div
+							class="bwp-sidebar sidebar-product col-xl-3 col-lg-3 col-md-12 col-12 px-4">
+							<aside id="bwp_ajax_filte-6" class="widget bwp_ajax_filte">
+								<div id="bwp_filter_ajax950953581664312889"
+									class="bwp-woocommerce-filter-product">
+									<div class="bwp-filter-ajax">
+								<!-- LỌC GIÁ -->
+										<form name="frmSearchPrice" action="/search/price" method = "post" id="bwp_form_filter_product">
+											<div class="bwp-filter bwp-filter-category">
+												<div id="pa_category" class="filter_category_product">
+													<div data-id_category="431" class="item-category ">
+														<label class="name">Giá dưới 10 triệu</label>
+														<div class="count">
+															<input ${price==1?"checked":""} type="radio" name="price" id="" value="1" onchange="document.frmSearchPrice.submit();" >
+														</div>
+													</div>
+													<div data-id_category="151" class="item-category ">
+														<label class="name">Giá từ 11 đến 12 triệu</label>
+														<div class="count">
+															<input ${price==2?"checked":""} type="radio" name="price" id="" value="2" onchange="document.frmSearchPrice.submit();" >
+														</div>
+													</div>
+													<div data-id_category="401" class="item-category ">
+														<label class="name">Giá từ 13 đến 14 triệu</label>
+														<div class="count">
+															<input ${price==3?"checked":""} type="radio" name="price" id=""value="3" onchange="document.frmSearchPrice.submit();" >
+														</div>
+													</div>
+													<div data-id_category="381" class="item-category ">
+														<label class="name">Giá từ 15 đến 16 triệu</label>
+														<div class="count">
+															<input ${price==4?"checked":""} type="radio" name="price" id="" value="4" onchange="document.frmSearchPrice.submit();" >
+														</div>
+													</div>
+													<div data-id_category="407" class="item-category ">
+														<label class="name">Giá trên 17 triệu</label>
+														<div class="count">
+															<input ${price==5?"checked":""} type="radio" name="price" id="" value="5" onchange="document.frmSearchPrice.submit();" >
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+								<!-- END LỌC GIÁ-->
+									</div>
+								</div>
+							</aside>
 
-					<div
-						class="rounded-circle bg-white shadow-1-strong d-flex align-items-center justify-content-center mb-4 mx-auto"
-						style="width: 150px; height: 150px;">
-						<img src="/views/img/java.png" height="70" alt="" loading="lazy" />
+						</div>
+						<div class="col-xl-9 col-lg-9 col-md-12 col-12">
+							<div class="content-products-list">
+								<ul class="products products-list row grid"
+									data-col="col-lg-4 col-md-4 col-sm-6 col-6">
+
+									<!-- DANH SÁCH SẢN PHẨM -->
+									<c:forEach var="item" items="${dssanpham}">
+										<li class="col-xl-4 col-lg-4 col-md-6 col-6">
+
+											<div
+												class="products-entry content-product1 clearfix product-wapper">
+												<div class="products-thumb">
+													<!-- ẢNH -->
+													<div class="product-thumb-hover">
+														<a href="/sanpham/id_sp=${item.MaSP}"
+															class="woocommerce-LoopProduct-link"><img
+															src="<c:url value='/views/img/${item.Anh}'/>"
+															class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-post-image"
+															alt="" loading="lazy"></a>
+													</div>
+													<!-- CÁC NÚT -->
+													<div class="product-button">
+														<ul class="product-button-social">
+															<!-- NÚT [GIỎ HÀNG] -->
+															<li><a href="/cart/add${item.MaSP}"><svg
+																		xmlns="http://www.w3.org/2000/svg" width="16"
+																		height="16" fill="currentColor" class="bi bi-bag"
+																		viewBox="0 0 16 16">
+                                                                    <path
+																			d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+                                                                </svg></a></li>
+															<!-- NÚT [YÊU THÍCH] -->
+															<li><a href="#"><svg
+																		xmlns="http://www.w3.org/2000/svg" width="16"
+																		height="16" fill="currentColor" class="bi bi-heart"
+																		viewBox="0 0 16 16">
+                                                                    <path
+																			d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                                                                </svg></a></li>
+															<!-- NÚT [TÌM] -->
+															<li><a href="#"><svg
+																		xmlns="http://www.w3.org/2000/svg" width="16"
+																		height="16" fill="currentColor" class="bi bi-search"
+																		viewBox="0 0 16 16">
+                                                                    <path
+																			d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                                </svg></a></li>
+														</ul>
+													</div>
+												</div>
+												<div class="products-content">
+													<div class="contents">
+														<!-- TÊN SẢN PHẨM -->
+														<h5 class="product-title">
+															<a>${item.TenSP}</a>
+														</h5>
+														<!-- GIÁ SẢN PHẨM -->
+														<span class="price"> <span
+															class="woocommerce-Price-amount amount"><bdi>
+																<span class="woocommerce-Price-currencySymbol"></span>${item.Gia}</bdi> VND
+														</span> <!-- - 
+                                                        <span class="woocommerce-Price-amount amount"><bdi>
+                                                        	<span class="woocommerce-Price-currencySymbol">$</span>90.00</bdi>
+                                                        </span> -->
+														</span>
+													</div>
+												</div>
+											</div>
+										</li>
+
+									</c:forEach>
+									<!-- DANH SÁCH SẢN PHẨM -->
+
+								</ul>
+							</div>
+							
+							<!-- PHÂN TRANG -->
+							<div class="bwp-top-bar bottom clearfix">
+								<nav aria-label="">
+									<ul class="pagination">
+										<li class="page-item"><a class="page-link" href="#"
+											tabindex="-1">Frist</a></li>
+										<li class="page-item"><a class="page-link" href="#">Prev</a></li>
+										<li class="page-item" aria-current="page"><a
+											class="page-link" href="#">Next</a></li>
+										<li class="page-item"><a class="page-link" href="#">Last</a></li>
+										</li>
+									</ul>
+								</nav>
+							</div>
+							<!-- END -->
+							
+						</div>
 					</div>
-
-					<p class="text-center">Không biết ghi gì ở đây nữa nên là ghi
-						đại cho nó dài</p>
-
-					<ul class="list-unstyled d-flex flex-row justify-content-center">
-						<li><a class="text-white px-2" href="#!"> <i
-								class="fab fa-facebook-square"></i>
-						</a></li>
-						<li><a class="text-white px-2" href="#!"> <i
-								class="fab fa-instagram"></i>
-						</a></li>
-						<li><a class="text-white ps-2" href="#!"> <i
-								class="fab fa-youtube"></i>
-						</a></li>
-					</ul>
-
 				</div>
-				<!--Grid column-->
-
-				<!--Grid column-->
-				<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-					<h5 class="text-uppercase mb-4">Dịch vụ</h5>
-
-					<ul class="list-unstyled">
-						<li class="mb-2"><a href="#!" class="text-white">Tích
-								điểm Quà tặng VIP</a></li>
-						<li class="mb-2"><a href="#!" class="text-white"></i>Lịch sử
-								mua hàng</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Tìm hiểu
-								về mua trả góp</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Chính
-								sách bảo hành</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Chính
-								sách đổi trả</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Giao
-								hàng & Thanh toán</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Hướng
-								dẫn mua online</a></li>
-					</ul>
-				</div>
-				<!--Grid column-->
-
-				<!--Grid column-->
-				<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-					<h5 class="text-uppercase mb-4">Công ty</h5>
-
-					<ul class="list-unstyled" style="text-decoration: none;">
-						<li class="mb-2"><a href="#!" class="text-white">Giới
-								thiệu công ty (MWG.vn)</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Tuyển
-								dụng</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Gửi góp
-								ý, khiếu nại</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Tìm siêu
-								thị (3.384 shop)</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Xem bản
-								mobile</a></li>
-						<li class="mb-2"><a href="#!" class="text-white">Hỏi đáp</a></li>
-					</ul>
-				</div>
-				<!--Grid column-->
-
-				<!--Grid column-->
-				<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-					<h5 class="text-uppercase mb-4">Tương tác</h5>
-
-					<ul class="list-unstyled">
-						<li>
-							<p>
-								<i class="fas fa-map-marker-alt pe-2"></i>TOKY, TRUNG MY TAY, 12
-								District
-							</p>
-						</li>
-						<li>
-							<p>
-								<i class="fas fa-phone pe-2"></i>+ 01 234 567 89
-							</p>
-						</li>
-						<li>
-							<p>
-								<i class="fas fa-envelope pe-2 mb-0"></i>phamphuc@gmail.com
-							</p>
-						</li>
-					</ul>
-				</div>
-				<!--Grid column-->
 			</div>
-			<!--Grid row-->
-		</div>
-		<!-- Grid container -->
-
-		<!-- Copyright -->
-		<div class="text-center p-3"
-			style="background-color: rgba(0, 0, 0, 0.2)">
-			© 2023 Copyright: <a class="text-white"
-				href="https://mdbootstrap.com/">phucpham.com</a>
-		</div>
-		<!-- Copyright -->
-	</footer>
+		</main>
+	</div>
+	
+	
+	<br>
+	<%@include file="/views/common/footer.jsp"%>
 	<!-- End of .container -->
 </body>
 </html>

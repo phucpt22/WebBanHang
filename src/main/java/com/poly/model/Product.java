@@ -1,73 +1,39 @@
 package com.poly.model;
 
-public class Product implements Cloneable{
-	
-	private int id;
-	private String name;
-	private double price;
-	private int quantity;
-	private String description;
-	private String image;
-	public Product(){
-		
-	}
-	public Product(int id, String name, double price, int quantity, String description, String image) {
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.quantity = quantity;
-		this.description = description;
-		this.image = image;
-	}
-	public Product orderProduct(int quantity) {
-		Product prod = null;
-		if(quantity <= this.quantity) {		
-			try {
-				prod = (Product) this.clone();
-				prod.setQuantity(quantity);
-				this.quantity -= quantity;
-			} catch (CloneNotSupportedException e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-		}
-		return prod;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
-	
+import java.util.List;
+
+import jakarta.persistence.Entity;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int MaSP;
+	String TenSP;
+	boolean TrangThai = true;
+	String Anh;
+	double Gia;
+	int SLTonkho;
+	String MoTa;
+	boolean TT_XoaSP = false;
+	@ManyToOne
+	@JoinColumn(name = "MaDM")
+	Category MaDM;
+	@OneToMany(mappedBy = "SanPham")
+	List<DetailOrder> dondatchitiet;
+	@OneToMany(mappedBy = "SanPham")
+	List<Feedback> danhgia;
 }
