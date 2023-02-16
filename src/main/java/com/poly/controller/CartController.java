@@ -1,58 +1,79 @@
 package com.poly.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import com.poly.dao.SanPhamDAO;
+import com.poly.model.MucGioHang;
+import com.poly.model.SanPham;
+import com.poly.service.SessionService;
+import com.poly.shopping.CartService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.poly.service.ParamService;
-import com.poly.service.SessionService;
-import com.poly.service.ShoppingCartService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/cart")
 public class CartController {
 	@Autowired
-	ShoppingCartService cart;
+	CartService cartService;
 	@Autowired
-	ParamService param;
+	SessionService sessionService;
 	@Autowired
-	SessionService session;
+	SanPhamDAO spDAO;
 	
-	@GetMapping("/view")
-	public String getLogin(Model model) {
-		model.addAttribute("cart", cart.getProduct());
-		model.addAttribute("count",cart.getCount());
-		model.addAttribute("amount", cart.getAmout());
-		return "/user/view";
-	}
-	@GetMapping("/add/{id}")
-	public String addToCart(@PathVariable("id") int id, Model model) {
-		cart.addProduct(id);
-		session.set("cartQuantity", cart.getCount()); //đếm số lượng cộng vào
-		model.addAttribute("message", "Add success!");
-		return "redirect:/cart/view";
+// ---- KHÔNG CÓ TRANG GIỎ HÀNG .JSP ----
+//	@RequestMapping("/giohang")
+//	public String getGioHang(Model model) {
+//		// Hiển thị tất cả sản phẩm đã chọn trong giỏ hàng
+//		model.addAttribute("cart", cartService.getAllItems());
+//		// Hiển thị số lượng sản phẩm có trong giỏ hàng
+//		model.addAttribute("total", cartService.getCount());
+//		return "redirect:/cart";
+//	}
+	
+	@RequestMapping("/giohang/them/{id}")
+	public String themVaoGio(@PathVariable("id") Integer id) {
+		// Tìm sản phẩm bằng id	
+		SanPham sanpham = spDAO.findById(id).get();
+		if (sanpham != null) {
+			// Set các giá trị sản phẩm vào item trong giỏ hàng
+			MucGioHang item = new MucGioHang();
+			item.setId(sanpham.getId_sp());
+			item.setTen(sanpham.getTensp());
+			item.setAnh(sanpham.getAnh());
+			item.setGia(sanpham.getGia());
+			item.setSoluong(1);
+			
+			// Thêm item vào giỏ hàng
+			cartService.add(item);
+		}
+		
+		return "redirect:/ds-sanpham";
 	}
 	
-	@PostMapping("/update/{id}")
-	public String updateCart(@PathVariable("id") int id, Model model) {
-		cart.updateProduct(id,param.getInt("quantity", 0));
-		model.addAttribute("message", "Update success!");
-		return "redirect:/cart/view";
+	@RequestMapping("/giohang/capnhat/{id}")
+	public String update(@PathVariable("id") Integer id, @RequestParam("soluong") Integer qty) {
+		cartService.update(id, qty);
+		System.out.println(qty);
+		return "redirect:/ds-sanpham";// hiển thị giỏ hàng
 	}
-	@GetMapping("/remove/{id}")
-	public String removeFromCart(@PathVariable int id, Model model) {
-		cart.removeProduct(id);
-		model.addAttribute("message", "Update success!");
-		return "redirect:/cart/view";
+	
+	@RequestMapping("/giohang/xoa/{id}")
+	public String remove(@PathVariable("id") Integer id) {
+		// Xóa sản phẩm trong giỏ hàng bằng id
+		cartService.remove(id);
+		return "redirect:/ds-sanpham";// hiển thị giỏ hàng
 	}
-	@GetMapping("/clear")
-	public String clearCart(Model model) {
-		cart.clear();
-		model.addAttribute("message", "Update success!");
-		return "redirect:/cart/view";
+
+	@RequestMapping("/giohang/clear")
+	public String clear() {
+		// Làm trống giỏ hàng (Xóa sạch tất cả sản phẩm đã chọn trong giỏ hàng)
+		cartService.clear();
+		return "redirect:/ds-sanpham";
 	}
+	
 }
